@@ -12,6 +12,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.4'
     id 'java'
 }
+apply plugin: 'io.spring.dependency-management'
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -26,8 +27,11 @@ dependencies {
     // This dependency is used by the application.
     implementation libs.guava
     implementation 'org.springframework.boot:spring-boot-starter'
-
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'mysql:mysql-connector-java:8.0.33'
+    compileOnly 'org.projectlombok:lombok:1.18.38'
+    annotationProcessor 'org.projectlombok:lombok:1.18.38'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
