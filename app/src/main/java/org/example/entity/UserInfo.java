@@ -21,7 +21,7 @@ public class UserInfo {
     private String name;
     @JsonProperty("email")
     private String email;
-    @JsonProperty("phoneNumber")
+    @JsonProperty("phone_number")
     private String phoneNumber;
     private String password;
 

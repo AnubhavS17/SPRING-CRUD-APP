@@ -32,6 +32,7 @@ dependencies {
     implementation 'mysql:mysql-connector-java:8.0.33'
     compileOnly 'org.projectlombok:lombok:1.18.38'
     annotationProcessor 'org.projectlombok:lombok:1.18.38'
+    implementation 'org.modelmapper:modelmapper:3.1.0'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

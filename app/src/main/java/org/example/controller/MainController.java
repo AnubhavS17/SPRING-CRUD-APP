@@ -1,10 +1,14 @@
 package org.example.controller;
 
 import org.example.dao.UserDao;
+import org.example.dto.UserDto;
 import org.example.entity.UserInfo;
 import org.example.repository.UserRepository;
 import org.example.service.UserDaoImp;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +18,14 @@ import java.util.List;
 @RequestMapping("/user")
 public class MainController {
 
-    @Autowired
+
     private UserRepository userRepository;
+
+//    private UserDao userDao;
     @Autowired
-    private UserDao userDao;
+    private UserDaoImp userDaoImp;
+    @Autowired
+    private ModelMapper modelMapper;
 
 //    @Autowired
 //    private UserInfo userInfo;
@@ -32,16 +40,22 @@ public class MainController {
 //        return "SAVED USER!!";
 //    }
     @PostMapping("/add")
-    @ResponseBody
-    public String addUser(@RequestBody UserInfo userInfo){
-        userRepository.save(userInfo);
-        return "SAVED USER!!";
+    public ResponseEntity<UserDto> addUser(@RequestBody UserInfo userInfo){
+        userDaoImp.addUser(userInfo);
+        UserDto userDto=modelMapper.map(userInfo, UserDto.class);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
-    @GetMapping("/get")
-    public  List<UserInfo> getAllUser(){
-        return userDao.getAllUser();
+    @GetMapping("/get/{phone_number}")
+    public  ResponseEntity<UserDto> getAllUser(@PathVariable("phone_number")String number){
+//        String number="1234342";
+        UserDto userDto=userDaoImp.getUserByPhone(number);
+        return new ResponseEntity<>(userDto,HttpStatus.OK);
     }
+//    @GetMapping("/get")
+//    public List<UserInfo> getAllUSer(){
+//        return userDao.getAllUser();
+//    }
 
     @DeleteMapping("/delete/{id}")
     public  String deleteUser(@PathVariable Long id){
